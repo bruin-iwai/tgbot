@@ -1,0 +1,22 @@
+version: 0.2
+
+env:
+  parameter-store:
+     BOT_URI: "/CodeBuild/BOT_URI"
+
+phases:
+  install:
+    commands:
+      - npm install -g serverless
+      - npm install
+  build:
+    commands:
+      - npm run lint
+      - npm run deploy
+  post_build:
+    commands:
+      - touch dummy.zip
+
+artifacts:
+  files:
+    - dummy.zip

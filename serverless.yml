@@ -1,0 +1,83 @@
+# Welcome to serverless. Read the docs
+# https://serverless.com/framework/docs/
+
+# Serverless.yml is the configuration the CLI
+# uses to deploy your code to your provider of choice
+
+# The `service` block is the name of the service
+service: tgbot
+
+# The `provider` block defines where your service will be deployed
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: ${env:AWS_REGION, 'ap-northeast-1'}
+  memorySize: 128
+  timeout: 60
+
+# The `functions` block defines what code to deploy
+functions:
+  coopReminder:
+    handler: index.handler
+    description: Telegramお知らせbot
+    environment:
+      BOT_URI: ${env:BOT_URI}
+    # The `events` block defines how to trigger the handler code
+    events:
+      - schedule:
+          name: weekly-event
+          description: '毎週定期的に起動するイベント'
+          rate: cron(0 11 ? * TUE *)
+          enabled: true
+          input:
+            chat_id: -25511902
+            text: '締切時刻が近づいています。\n注文はお早めに。'
+      - schedule:
+          name: homework-event
+          description: '平日17:30に起動するイベント'
+          rate: cron(25 8 ? * MON-FRI *)
+          enabled: false
+          input:
+            chat_id: -33444379
+            text: 'あと5分でネット停止。\nそろそろチャレンジやろうぜ！'
+      - schedule:
+          name: monday-homework-event
+          description: '月曜17:25に起動するイベント'
+          rate: cron(25 8 ? * MON *)
+          enabled: true
+          input:
+            chat_id: -33444379
+            text: '宿題はやったかい？'
+      - schedule:
+          name: tuesday-homework-event
+          description: '火曜17:25に起動するイベント'
+          rate: cron(25 8 ? * TUE *)
+          enabled: true
+          input:
+            chat_id: -33444379
+            text: '宿題はやったかい？'
+      - schedule:
+          name: wednesday-homework-event
+          description: '水曜17:25に起動するイベント'
+          rate: cron(25 8 ? * WED *)
+          enabled: true
+          input:
+            chat_id: -33444379
+            text: '宿題はやったかい？'
+      - schedule:
+          name: thursday-homework-event
+          description: '木曜17:25に起動するイベント'
+          rate: cron(25 8 ? * THU *)
+          enabled: true
+          input:
+            chat_id: -33444379
+            text: '宿題はやったかい？'
+      - schedule:
+          name: friday-homework-event
+          description: '金曜17:25に起動するイベント'
+          rate: cron(25 8 ? * FRI *)
+          enabled: true
+          input:
+            chat_id: -33444379
+            text: '宿題はやったかい？'

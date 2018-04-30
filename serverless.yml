@@ -45,7 +45,7 @@ functions:
           name: monday-homework-event
           description: '月曜17:25に起動するイベント'
           rate: cron(25 8 ? * MON *)
-          enabled: true
+          enabled: false
           input:
             chat_id: -33444379
             text: '宿題はやったかい？'
@@ -53,7 +53,7 @@ functions:
           name: tuesday-homework-event
           description: '火曜17:25に起動するイベント'
           rate: cron(25 8 ? * TUE *)
-          enabled: true
+          enabled: false
           input:
             chat_id: -33444379
             text: '宿題はやったかい？'
@@ -61,7 +61,7 @@ functions:
           name: wednesday-homework-event
           description: '水曜17:25に起動するイベント'
           rate: cron(25 8 ? * WED *)
-          enabled: true
+          enabled: false
           input:
             chat_id: -33444379
             text: '宿題はやったかい？'
@@ -69,7 +69,7 @@ functions:
           name: thursday-homework-event
           description: '木曜17:25に起動するイベント'
           rate: cron(25 8 ? * THU *)
-          enabled: true
+          enabled: false
           input:
             chat_id: -33444379
             text: '宿題はやったかい？'
@@ -77,7 +77,7 @@ functions:
           name: friday-homework-event
           description: '金曜17:25に起動するイベント'
           rate: cron(25 8 ? * FRI *)
-          enabled: true
+          enabled: false
           input:
             chat_id: -33444379
             text: '宿題はやったかい？'

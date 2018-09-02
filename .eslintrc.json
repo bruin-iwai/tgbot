@@ -14,7 +14,6 @@
   },
 
   "plugins": [
-    "import",
     "node",
     "promise",
     "standard"
@@ -172,11 +171,6 @@
     "wrap-iife": ["error", "any", { "functionPrototypeMethods": true }],
     "yield-star-spacing": ["error", "both"],
     "yoda": ["error", "never"],
-
-    "import/export": "error",
-    "import/first": "error",
-    "import/no-duplicates": "error",
-    "import/no-webpack-loader-syntax": "error",
 
     "node/no-deprecated-api": "error",
     "node/process-exit-as-throw": "error",

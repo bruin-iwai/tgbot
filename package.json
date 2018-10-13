@@ -13,6 +13,7 @@
   "author": "",
   "license": "",
   "dependencies": {
+    "aws-sdk": "^2.334.0",
     "axios": "^0.18.0"
   },
   "devDependencies": {

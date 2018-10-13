@@ -1,0 +1,14 @@
+version: 0.2
+
+env:
+  parameter-store:
+    BOT_URI: "/CodeBuild/BOT_URI"
+
+phases:
+  install:
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm run lint
+      - npm test

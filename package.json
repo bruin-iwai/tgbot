@@ -4,20 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js",
-    "lint": "eslint index.js",
+    "test": "jest --runInBand",
+    "lint": "eslint app/**/*.js __tests__/**/*.js __mocks__/**/*.js",
+    "prettier": "prettier-eslint --write \"app/**/*.js\" \"__tests__/**/*.js\" \"__mocks__/**/*.js\"",
     "deploy": "sls deploy",
     "undeploy": "sls remove"
   },
   "author": "",
-  "license": "ISC",
+  "license": "",
   "dependencies": {
     "axios": "^0.18.0"
   },
   "devDependencies": {
-    "eslint": "^5.5.0",
-    "eslint-plugin-node": "^7.0.1",
-    "eslint-plugin-promise": "^4.0.0",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "jest": "^23.4.2",
+    "prettier": "^1.13.5",
+    "prettier-eslint-cli": "^4.7.1",
+    "serverless-plugin-include-dependencies": "^3.1.0",
+    "serverless-pseudo-parameters": "^2.2.0"
   }
 }

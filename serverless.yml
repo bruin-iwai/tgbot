@@ -16,10 +16,19 @@ provider:
   memorySize: 128
   timeout: 60
 
+plugins:
+  - serverless-plugin-include-dependencies
+  - serverless-pseudo-parameters
+
+package:
+  individually: true
+  exclude:
+    - ./**
+
 # The `functions` block defines what code to deploy
 functions:
   coopReminder:
-    handler: index.handler
+    handler: app/coopReminder.handler
     description: Telegramお知らせbot
     environment:
       BOT_URI: ${env:BOT_URI}

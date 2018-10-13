@@ -15,6 +15,11 @@ provider:
   region: ${env:AWS_REGION, 'ap-northeast-1'}
   memorySize: 128
   timeout: 60
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ssm:GetParameter"
+      Resource: "arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*"
 
 plugins:
   - serverless-plugin-include-dependencies
@@ -30,8 +35,6 @@ functions:
   coopReminder:
     handler: app/coopReminder.handler
     description: Telegramお知らせbot
-    environment:
-      BOT_URI: ${env:BOT_URI}
     # The `events` block defines how to trigger the handler code
     events:
       - schedule:

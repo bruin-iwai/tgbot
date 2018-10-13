@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { handler } = require('../app/coopReminder');
+const { mockAwsPromise, mockSSMGetParameter } = require('../__mocks__/aws-sdk');
 
 jest.mock('axios');
 
@@ -7,6 +8,11 @@ describe('coopReminder', () => {
   test('normal', async () => {
     const post = jest.fn().mockResolvedValueOnce({ status: 200 });
     axios.create.mockReturnValueOnce({ post });
+    mockAwsPromise.mockResolvedValueOnce({
+      Parameter: {
+        Value: 'https://api.telegram.org/hogehoge/sendMessage',
+      },
+    });
 
     await handler({
       chat_id: -3135,
@@ -14,7 +20,7 @@ describe('coopReminder', () => {
     });
 
     expect(post).toHaveBeenCalledTimes(1);
-    expect(post).toHaveBeenCalledWith(process.env.BOT_URI, {
+    expect(post).toHaveBeenCalledWith('https://api.telegram.org/hogehoge/sendMessage', {
       chat_id: -3135,
       text: 'こんにちは',
     });
@@ -24,6 +30,11 @@ describe('coopReminder', () => {
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
       },
+    });
+    expect(mockSSMGetParameter).toHaveBeenCalledTimes(1);
+    expect(mockSSMGetParameter).toHaveBeenCalledWith({
+      Name: '/CoopReminder/BOT_URI',
+      WithDecryption: true,
     });
   });
 
@@ -33,6 +44,11 @@ describe('coopReminder', () => {
       statusText: 'Internal Server Error',
     });
     axios.create.mockReturnValueOnce({ post });
+    mockAwsPromise.mockResolvedValueOnce({
+      Parameter: {
+        Value: 'https://api.telegram.org/hogehoge/sendMessage',
+      },
+    });
 
     await expect(
       handler({
@@ -42,7 +58,7 @@ describe('coopReminder', () => {
     ).rejects.toThrow('500 Internal Server Error');
 
     expect(post).toHaveBeenCalledTimes(1);
-    expect(post).toHaveBeenCalledWith(process.env.BOT_URI, {
+    expect(post).toHaveBeenCalledWith('https://api.telegram.org/hogehoge/sendMessage', {
       chat_id: -4135,
       text: 'さようなら',
     });
@@ -52,6 +68,11 @@ describe('coopReminder', () => {
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
       },
+    });
+    expect(mockSSMGetParameter).toHaveBeenCalledTimes(1);
+    expect(mockSSMGetParameter).toHaveBeenCalledWith({
+      Name: '/CoopReminder/BOT_URI',
+      WithDecryption: true,
     });
   });
 });

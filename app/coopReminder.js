@@ -1,4 +1,7 @@
 const axiosBase = require('axios');
+const AWS = require('aws-sdk');
+
+const ssm = new AWS.SSM();
 
 module.exports.handler = async (event) => {
   const axios = axiosBase.create({
@@ -8,7 +11,15 @@ module.exports.handler = async (event) => {
     },
   });
 
-  const res = await axios.post(process.env.BOT_URI, {
+  const botUri = await ssm
+    .getParameter({
+      Name: '/CoopReminder/BOT_URI',
+      WithDecryption: true,
+    })
+    .promise()
+    .then((ret) => ret.Parameter.Value);
+
+  const res = await axios.post(botUri, {
     chat_id: event.chat_id,
     text: event.text,
   });

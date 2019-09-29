@@ -1,0 +1,19 @@
+extends:
+  - airbnb-base
+  - prettier
+plugins:
+  - prettier
+env:
+  jest: true
+rules:
+  no-console: 'off'
+  no-constant-condition:
+    - error
+    - checkLoops: false
+  no-param-reassign:
+    - error
+    - props: false
+  prettier/prettier:
+    - error
+    - singleQuote: true
+      semi: true

@@ -1,5 +1,23 @@
 module.exports = {
-  clearMocks: true,
+  projects: [
+    {
+      displayName: 'lint',
+      runner: 'jest-runner-eslint',
+      testMatch: [
+        '<rootDir>/*.js',
+        '<rootDir>/app/**/*.js',
+        '<rootDir>/__mocks__/**/*.js',
+        '<rootDir>/__tests__/**/*.js',
+      ],
+    },
+    {
+      displayName: 'test',
+      clearMocks: true,
+      testEnvironment: 'node',
+      testPathIgnorePatterns: ['/node_modules/', '/__tests__/test-utils.js'],
+      setupFilesAfterEnv: ['jest-extended'],
+    },
+  ],
   collectCoverage: true,
   collectCoverageFrom: ['app/**/*.js'],
   coverageThreshold: {
@@ -7,6 +25,4 @@ module.exports = {
       statements: 95,
     },
   },
-  testEnvironment: 'node',
-  testPathIgnorePatterns: ['/node_modules/', '/__tests__/test-utils.js'],
 };

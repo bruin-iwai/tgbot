@@ -8,5 +8,4 @@ phases:
       - npm ci
   build:
     commands:
-      - npm run lint
       - npm test

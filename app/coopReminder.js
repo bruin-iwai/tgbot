@@ -1,5 +1,8 @@
+const AWSXRay = require('aws-xray-sdk');
+const AWS = AWSXRay.captureAWS(require('aws-sdk'));
+AWSXRay.captureHTTPsGlobal(require('http'));
+AWSXRay.captureHTTPsGlobal(require('https'));
 const axios = require('axios').default;
-const AWS = require('aws-sdk');
 
 const ssm = new AWS.SSM();
 

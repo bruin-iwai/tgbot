@@ -20,6 +20,8 @@ provider:
       Action:
         - "ssm:GetParameter"
       Resource: "arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*"
+  deploymentBucket:
+    blockPublicAccess: true
 
 plugins:
   - serverless-plugin-include-dependencies

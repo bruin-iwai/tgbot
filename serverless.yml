@@ -22,6 +22,11 @@ provider:
       Action:
         - "ssm:GetParameter"
       Resource: "arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*"
+    - Effect: Allow
+      Action:
+        - ssm:GetCalendarState
+      Resource:
+        - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:document/*
   deploymentBucket:
     blockPublicAccess: true
   tracing:
@@ -48,9 +53,13 @@ functions:
     events:
       - schedule:
           name: weekly-event
-          description: '毎週定期的に起動するイベント'
-          rate: cron(0 11 ? * TUE *)
+          description: '毎日20時に起動するイベント'
+          rate: cron(0 11 * * ? *)
           enabled: true
           input:
             chat_id: -25511902
             text: '締切時刻が近づいています。\n注文はお早めに。'
+    layers:
+      - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:layer:awssdklayer:6
+    environment:
+      CALENDAR_NAME: myCalendar

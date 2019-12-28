@@ -7,6 +7,18 @@ const axios = require('axios').default;
 const ssm = new AWS.SSM();
 
 module.exports.handler = async (event) => {
+  // ChanageCalendarがopenでないときはスキップする
+  const state = await ssm
+    .getCalendarState({
+      CalendarNames: [process.env.CALENDAR_NAME],
+    })
+    .promise()
+    .then((ret) => ret.State);
+  if (state !== 'OPEN') {
+    console.log('Calendar is not open, then skipped.');
+    return;
+  }
+
   const botUri = await ssm
     .getParameter({
       Name: '/CoopReminder/BOT_URI',

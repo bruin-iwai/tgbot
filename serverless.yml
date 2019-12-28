@@ -37,12 +37,16 @@ plugins:
   - serverless-plugin-include-dependencies
   - serverless-plugin-common-excludes
   - serverless-pseudo-parameters
+  - serverless-layers
 
 package:
   individually: true
   exclude:
     - ./**
-    - node_modules/**/aws-sdk/**
+
+custom:
+  serverless-layers:
+    layersDeploymentBucket: jp-live-bruin-iwai-tgbot-awssdklayer-deploymentbucket
 
 # The `functions` block defines what code to deploy
 functions:
@@ -59,7 +63,5 @@ functions:
           input:
             chat_id: -25511902
             text: '締切時刻が近づいています。\n注文はお早めに。'
-    layers:
-      - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:layer:awssdklayer:6
     environment:
       CALENDAR_NAME: myCalendar

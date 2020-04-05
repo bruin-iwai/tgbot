@@ -37,16 +37,11 @@ plugins:
   - serverless-plugin-include-dependencies
   - serverless-plugin-common-excludes
   - serverless-pseudo-parameters
-  - serverless-layers
 
 package:
-  individually: true
   exclude:
     - ./**
-
-custom:
-  serverless-layers:
-    layersDeploymentBucket: jp-live-bruin-iwai-tgbot-awssdklayer-deploymentbucket
+    - node_modules/**/aws-sdk/**
 
 # The `functions` block defines what code to deploy
 functions:

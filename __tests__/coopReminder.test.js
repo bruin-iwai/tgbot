@@ -112,6 +112,6 @@ describe('coopReminder', () => {
     expect(mockSSMGetCalendarState).toHaveBeenCalledWith({
       CalendarNames: [process.env.CALENDAR_NAME],
     });
-    expect(mockSSMGetParameter).not.toHaveBeenCalled();
+    expect(mockSSMGetParameter).toHaveBeenCalled();
   });
 });

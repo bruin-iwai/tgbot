@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint app/**/*.js __tests__/**/*.js __mocks__/**/*.js",
+    "lint": "eslint --ignore-path .gitignore .",
     "deploy": "sls deploy",
     "undeploy": "sls remove"
   },

@@ -1,13 +1,5 @@
-# Welcome to serverless. Read the docs
-# https://serverless.com/framework/docs/
-
-# Serverless.yml is the configuration the CLI
-# uses to deploy your code to your provider of choice
-
-# The `service` block is the name of the service
 service: tgbot
 
-# The `provider` block defines where your service will be deployed
 provider:
   name: aws
   runtime: nodejs12.x
@@ -21,12 +13,13 @@ provider:
     - Effect: "Allow"
       Action:
         - "ssm:GetParameter"
-      Resource: "arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*"
+      Resource:
+        - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*"
     - Effect: Allow
       Action:
         - ssm:GetCalendarState
       Resource:
-        - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:document/*
+        - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:document/*"
   deploymentBucket:
     blockPublicAccess: true
   tracing:
@@ -36,14 +29,12 @@ provider:
 plugins:
   - serverless-plugin-include-dependencies
   - serverless-plugin-common-excludes
-  - serverless-pseudo-parameters
 
 package:
   exclude:
     - ./**
     - node_modules/**/aws-sdk/**
 
-# The `functions` block defines what code to deploy
 functions:
   coopReminder:
     handler: app/coopReminder.handler

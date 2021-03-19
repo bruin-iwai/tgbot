@@ -2,13 +2,14 @@ service: tgbot
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs12.x
   stage: dev
   region: ${env:AWS_REGION, 'ap-northeast-1'}
   memorySize: 512
   timeout: 60
   iamManagedPolicies:
     - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    - arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -51,3 +52,5 @@ functions:
             text: '締切時刻が近づいています。\n注文はお早めに。'
     environment:
       CALENDAR_NAME: myCalendar
+    layers:
+      - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"

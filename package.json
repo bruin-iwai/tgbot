@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint --ignore-path .gitignore .",
+    "prettier:check": "prettier --check *.js **/*.js",
     "sls": "sls",
     "deploy": "sls deploy",
     "undeploy": "sls remove"
@@ -24,7 +25,6 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^23.18.0",
-    "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "jest-extended": "^0.11.2",
@@ -36,6 +36,7 @@
   },
   "lint-staged": {
     "*.js": [
+      "prettier --write --ignore-unknown",
       "eslint --fix"
     ]
   },

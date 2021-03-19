@@ -3,7 +3,6 @@ extends:
   - prettier
 plugins:
   - jest
-  - prettier
 env:
   jest: true
 rules:
@@ -14,7 +13,3 @@ rules:
   no-param-reassign:
     - error
     - props: false
-  prettier/prettier:
-    - error
-    - singleQuote: true
-      semi: true

@@ -25,6 +25,10 @@ jobs:
     - run: npm run prettier:check
     - run: npm run lint
     - run: npm test
+    - name: codecov
+      run: npm run codecov
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     - name: deploy
       run: npm run deploy
       env:

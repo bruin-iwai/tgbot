@@ -32,7 +32,7 @@
     "jest-extended": "^0.11.2",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
-    "serverless": "^2.18.0",
+    "serverless": "^2.41.2",
     "serverless-plugin-common-excludes": "^3.0.0",
     "serverless-plugin-include-dependencies": "^4.1.0"
   },

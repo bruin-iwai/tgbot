@@ -7,7 +7,6 @@
     "test": "jest",
     "lint": "eslint --ignore-path .gitignore .",
     "prettier:check": "prettier --check *.js **/*.js",
-    "codecov": "codecov",
     "sls": "sls",
     "deploy": "sls deploy",
     "undeploy": "sls remove"
@@ -21,7 +20,6 @@
   },
   "devDependencies": {
     "ajv": "^7.0.3",
-    "codecov": "^3.8.1",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",

@@ -26,7 +26,7 @@ jobs:
     - run: npm run lint
     - run: npm test
     - name: codecov
-      run: npm run codecov
+      run: npx codecov
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     - name: deploy

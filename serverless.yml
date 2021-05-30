@@ -32,9 +32,23 @@ plugins:
   - serverless-plugin-common-excludes
 
 package:
-  exclude:
-    - ./**
-    - node_modules/**/aws-sdk/**
+  patterns:
+    - app/**
+    - '!__mocks__/**'
+    - '!__tests__/**'
+    - '!.github/**'
+    - '!coverage/**'
+    - '!.eslintrc.yml'
+    - '!.gitignore'
+    - '!.prettierignore'
+    - '!.prettierrc.yml'
+    - '!buildspec*.yml'
+    - '!jest.config.js'
+    - '!package*.json'
+    - '!serverless.yml'
+    - '!*.md'
+    - '!node_modules/**/aws-sdk/**'
+  excludeDevDependencies: false
 
 functions:
   coopReminder:

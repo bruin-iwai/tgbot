@@ -8,7 +8,7 @@ phases:
       - npm ci
   build:
     commands:
-      - npm run deploy
+      - npx sls deploy
   post_build:
     commands:
       - touch dummy.zip

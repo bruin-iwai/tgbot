@@ -6,10 +6,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint --ignore-path .gitignore .",
-    "prettier:check": "prettier --check *.js **/*.js",
-    "sls": "sls",
-    "deploy": "sls deploy",
-    "undeploy": "sls remove"
+    "prettier:check": "prettier --check *.js **/*.js"
   },
   "author": "",
   "license": "",

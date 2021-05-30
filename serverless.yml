@@ -1,4 +1,5 @@
 service: tgbot
+variablesResolutionMode: '20210326'
 
 provider:
   name: aws
@@ -27,6 +28,7 @@ provider:
   tracing:
     lambda: true
   logRetentionInDays: 14
+  lambdaHashingVersion: '20201221'
 
 plugins:
   - serverless-plugin-include-dependencies
@@ -67,5 +69,6 @@ functions:
             text: '締切時刻が近づいています。\n注文はお早めに。'
     environment:
       CALENDAR_NAME: myCalendar
+      BOT_URI: '${ssm:/CoopReminder/BOT_URI}'
     layers:
       - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"

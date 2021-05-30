@@ -19,15 +19,7 @@ module.exports.handler = async (event) => {
     return;
   }
 
-  const botUri = await ssm
-    .getParameter({
-      Name: '/CoopReminder/BOT_URI',
-      WithDecryption: true,
-    })
-    .promise()
-    .then((ret) => ret.Parameter.Value);
-
-  await axios.post(botUri, {
+  await axios.post(process.env.BOT_URI, {
     chat_id: event.chat_id,
     text: event.text,
   });

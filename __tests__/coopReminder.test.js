@@ -11,23 +11,19 @@ jest.mock('axios');
 describe('coopReminder', () => {
   beforeEach(() => {
     process.env.CALENDAR_NAME = 'cc';
+    process.env.BOT_URI = 'dd';
   });
 
   afterEach(() => {
     delete process.env.CALENDAR_NAME;
+    delete process.env.BOT_URI;
   });
 
   test('normal', async () => {
     axios.default.post.mockResolvedValueOnce();
-    mockAwsPromise
-      .mockResolvedValueOnce({
-        State: 'OPEN',
-      })
-      .mockResolvedValueOnce({
-        Parameter: {
-          Value: 'https://api.telegram.org/hogehoge/sendMessage',
-        },
-      });
+    mockAwsPromise.mockResolvedValueOnce({
+      State: 'OPEN',
+    });
 
     await handler({
       chat_id: -3135,
@@ -35,21 +31,13 @@ describe('coopReminder', () => {
     });
 
     expect(axios.default.post).toHaveBeenCalledTimes(1);
-    expect(axios.default.post).toHaveBeenCalledWith(
-      'https://api.telegram.org/hogehoge/sendMessage',
-      {
-        chat_id: -3135,
-        text: 'こんにちは',
-      }
-    );
+    expect(axios.default.post).toHaveBeenCalledWith(process.env.BOT_URI, {
+      chat_id: -3135,
+      text: 'こんにちは',
+    });
     expect(mockSSMGetCalendarState).toHaveBeenCalledTimes(1);
     expect(mockSSMGetCalendarState).toHaveBeenCalledWith({
       CalendarNames: [process.env.CALENDAR_NAME],
-    });
-    expect(mockSSMGetParameter).toHaveBeenCalledTimes(1);
-    expect(mockSSMGetParameter).toHaveBeenCalledWith({
-      Name: '/CoopReminder/BOT_URI',
-      WithDecryption: true,
     });
   });
 
@@ -59,15 +47,9 @@ describe('coopReminder', () => {
         status: 500,
       },
     });
-    mockAwsPromise
-      .mockResolvedValueOnce({
-        State: 'OPEN',
-      })
-      .mockResolvedValueOnce({
-        Parameter: {
-          Value: 'https://api.telegram.org/hogehoge/sendMessage',
-        },
-      });
+    mockAwsPromise.mockResolvedValueOnce({
+      State: 'OPEN',
+    });
 
     try {
       await handler({
@@ -79,21 +61,13 @@ describe('coopReminder', () => {
     }
 
     expect(axios.default.post).toHaveBeenCalledTimes(1);
-    expect(axios.default.post).toHaveBeenCalledWith(
-      'https://api.telegram.org/hogehoge/sendMessage',
-      {
-        chat_id: -4135,
-        text: 'さようなら',
-      }
-    );
+    expect(axios.default.post).toHaveBeenCalledWith(process.env.BOT_URI, {
+      chat_id: -4135,
+      text: 'さようなら',
+    });
     expect(mockSSMGetCalendarState).toHaveBeenCalledTimes(1);
     expect(mockSSMGetCalendarState).toHaveBeenCalledWith({
       CalendarNames: [process.env.CALENDAR_NAME],
-    });
-    expect(mockSSMGetParameter).toHaveBeenCalledTimes(1);
-    expect(mockSSMGetParameter).toHaveBeenCalledWith({
-      Name: '/CoopReminder/BOT_URI',
-      WithDecryption: true,
     });
   });
 

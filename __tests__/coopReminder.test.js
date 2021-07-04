@@ -1,10 +1,15 @@
 const axios = require('axios');
+
+const mockSsmSend = jest.fn();
+const mockSsmGetCalendarStateCommand = jest.fn();
+jest.doMock('@aws-sdk/client-ssm', () => ({
+  SSM: jest.fn(() => ({
+    send: mockSsmSend,
+  })),
+  GetCalendarStateCommand: mockSsmGetCalendarStateCommand,
+}));
+
 const { handler } = require('../app/coopReminder');
-const {
-  mockAwsPromise,
-  mockSSMGetParameter,
-  mockSSMGetCalendarState,
-} = require('../__mocks__/aws-sdk');
 
 jest.mock('axios');
 
@@ -21,7 +26,7 @@ describe('coopReminder', () => {
 
   test('normal', async () => {
     axios.default.post.mockResolvedValueOnce();
-    mockAwsPromise.mockResolvedValueOnce({
+    mockSsmSend.mockResolvedValueOnce({
       State: 'OPEN',
     });
 
@@ -35,8 +40,8 @@ describe('coopReminder', () => {
       chat_id: -3135,
       text: 'こんにちは',
     });
-    expect(mockSSMGetCalendarState).toHaveBeenCalledTimes(1);
-    expect(mockSSMGetCalendarState).toHaveBeenCalledWith({
+    expect(mockSsmGetCalendarStateCommand).toHaveBeenCalledTimes(1);
+    expect(mockSsmGetCalendarStateCommand).toHaveBeenCalledWith({
       CalendarNames: [process.env.CALENDAR_NAME],
     });
   });
@@ -47,7 +52,7 @@ describe('coopReminder', () => {
         status: 500,
       },
     });
-    mockAwsPromise.mockResolvedValueOnce({
+    mockSsmSend.mockResolvedValueOnce({
       State: 'OPEN',
     });
 
@@ -65,14 +70,14 @@ describe('coopReminder', () => {
       chat_id: -4135,
       text: 'さようなら',
     });
-    expect(mockSSMGetCalendarState).toHaveBeenCalledTimes(1);
-    expect(mockSSMGetCalendarState).toHaveBeenCalledWith({
+    expect(mockSsmGetCalendarStateCommand).toHaveBeenCalledTimes(1);
+    expect(mockSsmGetCalendarStateCommand).toHaveBeenCalledWith({
       CalendarNames: [process.env.CALENDAR_NAME],
     });
   });
 
   test('skip by calendar', async () => {
-    mockAwsPromise.mockResolvedValueOnce({
+    mockSsmSend.mockResolvedValueOnce({
       State: 'CLOSED',
     });
 
@@ -82,10 +87,9 @@ describe('coopReminder', () => {
     });
 
     expect(axios.default.post).not.toHaveBeenCalled();
-    expect(mockSSMGetCalendarState).toHaveBeenCalledTimes(1);
-    expect(mockSSMGetCalendarState).toHaveBeenCalledWith({
+    expect(mockSsmGetCalendarStateCommand).toHaveBeenCalledTimes(1);
+    expect(mockSsmGetCalendarStateCommand).toHaveBeenCalledWith({
       CalendarNames: [process.env.CALENDAR_NAME],
     });
-    expect(mockSSMGetParameter).not.toHaveBeenCalled();
   });
 });

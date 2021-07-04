@@ -12,18 +12,15 @@ provider:
     role:
       managedPolicies:
         - arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy
+        - arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
       statements:
-        - Effect: "Allow"
-          Action:
-            - "ssm:GetParameter"
-          Resource:
-            - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*"
         - Effect: Allow
           Action:
             - ssm:GetCalendarState
           Resource:
             - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:document/*"
   deploymentBucket:
+    name: jp-live-bruin-iwai-serverlessdeploymentbucket
     blockPublicAccess: true
   tracing:
     lambda: true
@@ -31,8 +28,7 @@ provider:
   lambdaHashingVersion: '20201221'
 
 plugins:
-  - serverless-plugin-include-dependencies
-  - serverless-plugin-common-excludes
+  - serverless-layers
 
 package:
   patterns:
@@ -51,7 +47,6 @@ package:
     - '!serverless.yml'
     - '!*.md'
     - '!node_modules/**/aws-sdk/**'
-  excludeDevDependencies: false
 
 functions:
   coopReminder:

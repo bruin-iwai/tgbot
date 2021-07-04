@@ -1,19 +1,19 @@
+const { SSM, GetCalendarStateCommand } = require('@aws-sdk/client-ssm');
 const AWSXRay = require('aws-xray-sdk');
-const AWS = AWSXRay.captureAWS(require('aws-sdk'));
-AWSXRay.captureHTTPsGlobal(require('http'));
-AWSXRay.captureHTTPsGlobal(require('https'));
-const axios = require('axios').default;
-
-const ssm = new AWS.SSM();
+// AWSXRay.captureHTTPsGlobal(require('http'));
+// AWSXRay.captureHTTPsGlobal(require('https'));
 
 module.exports.handler = async (event) => {
+  // AWSXRay.capturePromise();
+  // eslint-disable-next-line global-require
+  const axios = require('axios').default;
+
   // ChanageCalendarがopenでないときはスキップする
-  const state = await ssm
-    .getCalendarState({
-      CalendarNames: [process.env.CALENDAR_NAME],
-    })
-    .promise()
-    .then((ret) => ret.State);
+  const ssm = AWSXRay.captureAWSv3Client(new SSM({}));
+  const command = new GetCalendarStateCommand({
+    CalendarNames: [process.env.CALENDAR_NAME],
+  });
+  const state = await ssm.send(command).then((ret) => ret.State);
   if (state !== 'OPEN') {
     console.log('Calendar is not open, then skipped.');
     return;

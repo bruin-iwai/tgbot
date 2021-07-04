@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint --ignore-path .gitignore .",
-    "prettier:check": "prettier --check *.js **/*.js"
+    "prettier:check": "prettier --check *.js **/*.js",
+    "prettier:write": "prettier --write *.js **/*.js"
   },
   "author": "",
   "license": "",

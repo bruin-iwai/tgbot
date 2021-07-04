@@ -1,15 +1,15 @@
 const { SSM, GetCalendarStateCommand } = require('@aws-sdk/client-ssm');
 const AWSXRay = require('aws-xray-sdk');
-AWSXRay.captureHTTPsGlobal(require('http'));
-AWSXRay.captureHTTPsGlobal(require('https'));
-
-AWSXRay.capturePromise();
-const axios = require('axios').default;
-
-const ssm = AWSXRay.captureAWSv3Client(new SSM({}));
+// AWSXRay.captureHTTPsGlobal(require('http'));
+// AWSXRay.captureHTTPsGlobal(require('https'));
 
 module.exports.handler = async (event) => {
+  // AWSXRay.capturePromise();
+  // eslint-disable-next-line global-require
+  const axios = require('axios').default;
+
   // ChanageCalendarがopenでないときはスキップする
+  const ssm = AWSXRay.captureAWSv3Client(new SSM({}));
   const command = new GetCalendarStateCommand({
     CalendarNames: [process.env.CALENDAR_NAME],
   });

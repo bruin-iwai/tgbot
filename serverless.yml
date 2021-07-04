@@ -12,6 +12,7 @@ provider:
     role:
       managedPolicies:
         - arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy
+        - arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
       statements:
         - Effect: Allow
           Action:

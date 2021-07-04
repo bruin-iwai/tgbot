@@ -1,7 +1,5 @@
-const mockCaptureAWS = (x) => x;
-const mockCaptureHTTPsGlobal = (x) => x;
-
 module.exports = {
-  captureAWS: mockCaptureAWS,
-  captureHTTPsGlobal: mockCaptureHTTPsGlobal,
+  captureAWSv3Client: (x) => x,
+  captureHTTPsGlobal: (x) => x,
+  capturePromise: () => {},
 };

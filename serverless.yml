@@ -13,11 +13,6 @@ provider:
       managedPolicies:
         - arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy
       statements:
-        - Effect: "Allow"
-          Action:
-            - "ssm:GetParameter"
-          Resource:
-            - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*"
         - Effect: Allow
           Action:
             - ssm:GetCalendarState

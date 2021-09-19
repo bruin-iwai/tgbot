@@ -5,7 +5,6 @@ module.exports = {
       clearMocks: true,
       testEnvironment: 'node',
       testPathIgnorePatterns: ['/node_modules/', '/__tests__/test-utils.js'],
-      setupFilesAfterEnv: ['jest-extended'],
     },
   ],
   collectCoverage: true,

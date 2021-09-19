@@ -28,7 +28,7 @@
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.2",
     "serverless": "^2.50.0",
-    "serverless-layers": "^2.5.0-beta"
+    "serverless-layers": "^2.5.1"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",

@@ -1,5 +1,5 @@
 service: tgbot
-variablesResolutionMode: '20210326'
+deprecationNotificationMode: error
 
 provider:
   name: aws
@@ -25,10 +25,6 @@ provider:
   tracing:
     lambda: true
   logRetentionInDays: 14
-  lambdaHashingVersion: '20201221'
-
-plugins:
-  - serverless-layers
 
 package:
   patterns:

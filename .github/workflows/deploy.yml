@@ -19,9 +19,9 @@ jobs:
         node-version: [14]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
@@ -29,7 +29,7 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::172977635987:role/github-actions-oidc-role
+        role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
         aws-region: ap-northeast-1
     - name: deploy
       run: npx sls deploy
